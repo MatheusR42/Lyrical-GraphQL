@@ -8,7 +8,9 @@ import App  from './components/App';
 import CreateSong  from './components/CreateSong';
 import SongDetail from './components/SongDetail';
 
-const client = new ApollloClient({});
+const client = new ApollloClient({
+	dataIdFromObject: o => o.id
+});
 
 const Root = () => {
   return (
