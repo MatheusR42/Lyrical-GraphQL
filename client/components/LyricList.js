@@ -3,8 +3,18 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 class LyricList extends Component{
-	onlike(id){
-		this.props.mutate({ variables: { id } })
+	onlike(id, likes){
+		this.props.mutate({ 
+			variables: { id },
+			optimisticResponse: {
+				__typename: 'Mutation',
+				likeLyric: {
+					id,
+					likes: likes + 1,
+					__typename: 'LyricType'
+				}
+			}
+		})
 	}
 
 	renderLyrics(){
@@ -14,7 +24,7 @@ class LyricList extends Component{
 					<div className="vote-box">
 						{content}
 						<i className="material-icons"
-							onClick={() => this.onlike(id)}>
+							onClick={() => this.onlike(id, likes)}>
 							thumb_up
 						</i>
 						{likes}
